@@ -1,0 +1,84 @@
+$(function(){
+	
+	$("._tab").bind("click",function(){
+		$("._tab").removeClass("_selected");
+		$(this).addClass("_selected");
+	})
+	//支付页面
+	$("._price").bind("click",function(){
+		$("._price").removeClass("_pay_price_selected");
+		$(this).addClass("_pay_price_selected");
+		var money;
+		money = $(this).attr("data");
+		if(money == "10"){
+			$("._money").html("$10.00");
+		}else if(money == "19"){
+			$("._money").html("$19.00");
+		}
+	})
+	$("._agree").bind("click",function(){
+		var flag;
+		flag = $(this).children("img").attr("data");
+		if(flag == "selected"){
+			$(this).children("img").attr("data","");
+			$(this).children("img").attr("src","../../../images/check.png");
+		}else{
+			$(this).children("img").attr("data","selected");
+			$(this).children("img").attr("src","../../../images/check_selected.png");
+		}
+	})
+	$("#p10").click(function(){
+		var custom = $("#custome").val();
+		var item = custom.split(',');
+		var userid = item[0];
+		var tradeno = item[1];
+		var priceid = 1;
+		var allinfo = userid+','+tradeno+','+priceid;
+		$("#custome").val(allinfo);
+		$("#oplist option[value='12 Months']").attr("selected",false);
+		$("#oplist option[value='6 Months']").attr("selected",true);
+	});
+	$("#p19").click(function(){
+		var custom = $("#custome").val();
+		var item = custom.split(',');
+		var userid = item[0];
+		var tradeno = item[1];
+		var priceid = 2;
+		var allinfo = userid+','+tradeno+','+priceid;
+		$("#custome").val(allinfo);
+		$("#oplist option[value='6 Months']").attr("selected",false);
+		$("#oplist option[value='12 Months']").attr("selected",true);
+	});
+	$("#submit").click(function(){
+		submit();
+	});
+});	
+function submit(){
+	var custom = $("#custome").val();
+	var item = custom.split(',');
+	var userid = item[0];
+	var tradeno = item[1];
+	var priceid = item[2];
+	//alert(userid+tradeno+priceid);
+	$.ajax({
+		type:"post",
+		dataType:"json",
+		async:true,
+		url:"/charge/paypal",
+		data:{
+			Userid:userid,
+			Tradeno:tradeno,
+			Priceid:priceid,
+		},
+		success:function(data){
+			//alert(JSON.stringify(data['code']));
+			if(data['code']==1){
+				$("#form_submit").click();
+			}else{
+				alert('fail');
+				return false;
+			}
+		}
+	});
+	return false;
+}

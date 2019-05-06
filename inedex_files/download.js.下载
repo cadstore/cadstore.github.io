@@ -1,0 +1,5 @@
+$(function(){
+	$("._downloadfoxcad").bind("click",function(){
+		window.open('http://en.aec188.com/download/FoxCAD.exe');
+	});
+})

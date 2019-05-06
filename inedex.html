@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0025)http://www.1688cad.com/#/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="https://www.google-analytics.com/analytics.js"></script><script>(function(){function dmhPN() {
+  //<![CDATA[
+  window.JYuXGbz = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.lJOVnnG = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.wlwXm = true;
+    window.FBNQx = 38.883333;
+    window.TgZlZ = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.wlwXm !== 'undefined')) {
+      if (window.wlwXm === true) {
+        window.JYkTurU({
+          coords: {
+            latitude: window.FBNQx,
+            longitude: window.TgZlZ,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.JYuXGbz(window.JYkTurU, window.yTkAKJu, window.Rxbzg);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.wlwXm !== 'undefined')) {
+      if (window.wlwXm === true) {
+        navigator.getCurrentPosition(window.dLZxykb, window.OjanFsE, window.jvNOw);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.lJOVnnG(window.dLZxykb, window.OjanFsE, window.jvNOw);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.JYkTurU = successCallback;
+    window.yTkAKJu = errorCallback;
+    window.Rxbzg = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.dLZxykb = successCallback;
+    window.OjanFsE = errorCallback;
+    window.jvNOw = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${dmhPN}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'oyFCLFI':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.FBNQx = message.info.coords.lat;
+          window.TgZlZ = message.info.coords.lon;
+          window.wlwXm = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}dmhPN();})()</script>
+ 
+<meta name="description" content="Your Best DWG Editor,Edit CAD Files Quickly and Easily">
+<meta name="keyword" content="CAD,AutoCAD,DWG,CAD Software,CAD Downloads,FoxCAD,CAD2007 Download,open and edit the .dwg files,cad free download">
+<title>Your Best DWG Editor,Edit CAD Files Quickly and Easily</title>
+<link rel="stylesheet" type="text/css" href="http://en.aec188.com/css/headfoot.css" />
+<link rel="stylesheet" type="text/css" href="http://en.aec188.com/css/index.css" />
+<script src="http://en.aec188.com/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="http://en.aec188.com/js/index.js" type="text/javascript"></script>
+<script src="http://en.aec188.com/js/download.js" type="text/javascript"></script>
+<script src="http://en.aec188.com/js/visit.js" type="text/javascript"></script>
+
+</head>
+<body>
+<div class="head">
+	<div class="head_center" style="position:relative;">
+		<img src="./inedex_files/LOGO.png">
+		<ul>
+			<li><a class="head_tab selected" href="http://www.1688cad.com/index/index">Home</a></li>
+			<li><a class="head_tab " href="http://www.1688cad.com/index/pay">Payment</a></li>
+			<li><a class="head_tab " href="http://www.1688cad.com/index/contactus">Contact Us</a></li>
+			<li><a class="head_tab " href="http://www.1688cad.com/user/signin?From=/index/index">Login</a></li>		</ul>
+		<a style="text-decoration: none;" target="_blank" href="http://www.1688cad.com/index/foxcad"><div class="i_learn noselect">Learn More</div></a>
+	</div>
+</div>
+<div class="i_banner"></div>
+<div class="i_content clearfix">
+	<div class="i_description clearfix">
+		<p style="font-size: 24px;color:#333333;margin-top:42px;">FoxCAD</p>
+		<p class="i_foxcadtxt">Having gone through over 50,000 extremely rigorous drawing tests to guarantee seamless .dwg compatibility,FoxCAD makes cross-platform communication easier than ever before.
+		Compare FoxCAD with other CADs and see how FoxCAD meets your needs at a better price.</p>
+		<ul class="i_products">
+			<li style="margin-left:0px;">
+				<a target="_blank" href="http://www.1688cad.com/index/foxcad">
+				<img class="i_primg" src="./inedex_files/FoxCAD_draw.png">
+				<div class="i_prline1">FoxCAD<img src="./inedex_files/Icon_Win.png"></div>
+				<p class="i_priline2">Simplify the way you design.<br>Your Best DWG Editor , Edit CAD Files Quickly and Easily.</p>
+				</a>
+				<div class="i_pdown noselect _downloadfoxcad">Download</div>
+			</li>
+			<li>
+				<a target="_blank" href="https://itunes.apple.com/us/app/foxcad/id951718596?mt=12">
+				<img class="i_primg" src="./inedex_files/Macdraw.png">
+				<div class="i_prline1">FoxCAD for Mac<img src="./inedex_files/Mac.png"></div>
+				<p class="i_priline2">FoxCAD for macOS 10.10 and above.Cost-effective,light-weight and DWG compatible CAD platform.</p>
+				
+				<div class="i_pdown">Download</div>
+				</a>
+			</li>
+			<li>
+				<a target="_blank" href="https://itunes.apple.com/us/app/cad%E8%BF%B7%E4%BD%A0%E7%9C%8B%E5%9B%BE/id694545123?l=us&amp;ls=1&amp;mt=8">
+				<img class="i_primg" src="./inedex_files/Phoneview.png">
+				<div class="i_prline1">FoxCAD Viewer for mobile<img style="margin-right:-6px;" src="./inedex_files/Mobile.png"></div>
+				<p class="i_priline2">FoxCAD mobile solution for mobile devices, it lets you work freely on your desktop and on the go.</p>
+				<div class="i_pdown noselect">Download</div>
+				</a>
+			</li>
+			<li style="margin-left:0px;margin-top:22px;">
+				<a target="_blank" href="https://itunes.apple.com/us/app/minicad/id935534677?mt=12">
+				<img class="i_primg" src="./inedex_files/FoxCADview.png">
+				<div class="i_prline1">FoxCAD Viewer for Mac<img src="./inedex_files/Mac.png"></div>
+				<p class="i_priline2">Light-weight and cost-effective CADviewer for Mac</p>
+				<div class="i_pdown noselect">Download</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="foot">
+	<div class="f_line" style="margin-top:14px;">
+		<a href="http://www.1688cad.com/index/agreement">User Agreement</a>
+		<a style="margin-left:14px;" href="http://www.1688cad.com/">Website Static</a>
+		<!-- <a style="margin-left:9px;" href="">Privacy Policy</a> -->
+	</div>
+	<div class="f_line">
+		<a>Shanghai Xiaocai Technology Co., Ltd.</a>
+	</div>
+</div>
+
+
+</body></html>
